@@ -73,4 +73,6 @@ describe('DESCRIBE THE ISSUE', function() {
     const title = await driver.getTitle();
     expect(title).to.equal('Google');
   });
+
+  // Add test reproducing the issue here.
 });
