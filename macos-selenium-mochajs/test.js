@@ -14,35 +14,29 @@
  * limitations under the License.
  */
 
-const { logger, setupBrowserVersion } = require('./helper.js');
 const { Builder } = require('selenium-webdriver');
 const { expect } = require('expect');
 const chrome = require('selenium-webdriver/chrome');
 
 describe('Selenium ChromeDriver', function () {
   let driver;
-  let chromedriverBuild;
-  let chromeBuild;
 
   before(async function () {
-    // The chrome and chromedriver installation can take some time.
+    // The browser and driver installation can take some time.
     // Increase timeout to 5 minutes to allow for installations to complete.
     this.timeout(5 * 60 * 1000);
-    // By default, the test uses the latest Chrome version.
-    // Replace the empty string with the specific Chromium version if needed,
-    // e.g. setupBrowserVersion('144.0.7553.0').
-    ({ chromeBuild, chromedriverBuild } = await setupBrowserVersion(''));
   });
 
   beforeEach(async function () {
-    logger.debug(`Launching Chrome at ${chromeBuild.executablePath}`);
-
     const options = new chrome.Options();
     options.addArguments('--headless');
     options.addArguments('--no-sandbox');
-    options.setBinaryPath(chromeBuild.executablePath);
+    // By default, the test uses the latest Chrome version.
+    // Replace the "stable" with the specific browser version if needed,
+    // e.g. options.setBrowserVersion("115");
+    options.setBrowserVersion('stable');
 
-    const service = new chrome.ServiceBuilder(chromedriverBuild.executablePath)
+    const service = new chrome.ServiceBuilder()
       .loggingTo('chromedriver.log')
       .enableVerboseLogging();
 

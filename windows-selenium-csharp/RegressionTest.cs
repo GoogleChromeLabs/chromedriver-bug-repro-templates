@@ -28,9 +28,13 @@ public class Tests
         var options = new ChromeOptions();
         options.AddArgument("--headless");
         options.AddArgument("--no-sandbox");
+        // By default, the test uses the latest Chrome version.
+        // Replace the "stable" with the specific browser version if needed,
+        // e.g. options.BrowserVersion = "115";
+        options.BrowserVersion = "stable";
 
         var service = ChromeDriverService.CreateDefaultService();
-        service.LogPath = "d:\\chromedriver.log";
+        service.LogPath = "chromedriver.log";
         service.EnableVerboseLogging = true;
 
         IWebDriver driver = new ChromeDriver(service, options);

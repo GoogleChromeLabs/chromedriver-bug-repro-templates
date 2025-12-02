@@ -14,11 +14,9 @@
     "chai": "^4.3.7",
     "expect": "^30.2.0",
     "mocha": "^10.2.0",
-    "selenium-webdriver": "^4.38.0",
-    "winston": "^3.18.3"
+    "selenium-webdriver": "^4.38.0"
   },
   "devDependencies": {
-    "@puppeteer/browsers": "^2.10.13",
     "prettier": "^3.7.3"
   }
 }

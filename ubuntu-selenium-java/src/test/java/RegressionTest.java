@@ -34,6 +34,11 @@ public class RegressionTest {
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
 
+        // By default, the test uses the latest Chrome version.
+        // Replace the "stable" with the specific browser version if needed,
+        // e.g. options.setBrowserVersion("115");
+        options.setBrowserVersion("stable");
+
         ChromeDriverService service = new ChromeDriverService.Builder()
                 .withLogFile(new java.io.File("chromedriver.log"))
                 .withVerbose(true)
