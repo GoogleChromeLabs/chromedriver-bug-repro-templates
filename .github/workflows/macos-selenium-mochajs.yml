@@ -48,17 +48,6 @@ jobs:
       working-directory: macos-selenium-mochajs
       run: npm test
 
-    - name: Dump latest ChromeDriver log
+    - name: Dump log
       if: always()
-      run: |
-        if [ -d "logs" ]; then
-          LATEST_LOG=$(ls -t logs/chromedriver-*.log 2>/dev/null | head -n 1)
-          if [ -n "$LATEST_LOG" ]; then
-            echo "Dumping $LATEST_LOG"
-            cat "$LATEST_LOG"
-          else
-            echo "No log files found in logs/"
-          fi
-        else
-          echo "logs/ directory not found"
-        fi
+      run: cat chromedriver.log

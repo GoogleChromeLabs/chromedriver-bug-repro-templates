@@ -8,15 +8,15 @@ const {
   ChromeReleaseChannel,
 } = require('@puppeteer/browsers');
 
-export const logger = winston.createLogger({
+const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.cli(),
   transports: [new winston.transports.Console()],
 });
 
-
-export async function setupBrowserVersion(BROWSER_VERSION) {
-  const resolvedBrowserVersion = BROWSER_VERSION ?? 
+async function setupBrowserVersion(BROWSER_VERSION) {
+  const resolvedBrowserVersion =
+    BROWSER_VERSION ||
     (await resolveBuildId(
       Browser.CHROME,
       detectBrowserPlatform(),
@@ -44,5 +44,10 @@ export async function setupBrowserVersion(BROWSER_VERSION) {
     `ChromeDriver installed at: ${chromedriverBuild.executablePath}`,
   );
 
-  return {chromeBuild, chromedriverBuild};
+  return { chromeBuild, chromedriverBuild };
 }
+
+module.exports = {
+  logger,
+  setupBrowserVersion,
+};

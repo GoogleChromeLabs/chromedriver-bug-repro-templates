@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
+const { logger, setupBrowserVersion } = require('./helper.js');
 const { Builder } = require('selenium-webdriver');
 const { expect } = require('expect');
 const chrome = require('selenium-webdriver/chrome');
-const fs = require('fs');
-const path = require('path');
-import {logger, setupBrowserVersion} from './helper.js';
 
 describe('Selenium ChromeDriver', function () {
   let driver;
@@ -30,10 +28,10 @@ describe('Selenium ChromeDriver', function () {
     // The chrome and chromedriver installation can take some time.
     // Increase timeout to 5 minutes to allow for installations to complete.
     this.timeout(5 * 60 * 1000);
-    // By default, the test uses the latest Chrome version. 
-    // Replace the empty string with the specific Chromium version if needed, 
-    // e.g. '144.0.7553.0'.
-    ({chromeBuild, chromedriverBuild} = await setupBrowserVersion(BROWSER_VERSION));
+    // By default, the test uses the latest Chrome version.
+    // Replace the empty string with the specific Chromium version if needed,
+    // e.g. setupBrowserVersion('144.0.7553.0').
+    ({ chromeBuild, chromedriverBuild } = await setupBrowserVersion(''));
   });
 
   beforeEach(async function () {
@@ -44,17 +42,8 @@ describe('Selenium ChromeDriver', function () {
     options.addArguments('--no-sandbox');
     options.setBinaryPath(chromeBuild.executablePath);
 
-    const chromedriverLogDir = path.join(__dirname, 'logs');
-    if (!fs.existsSync(chromedriverLogDir)) {
-      fs.mkdirSync(chromedriverLogDir);
-    }
-    const chromedriverLogFile = path.join(
-      chromedriverLogDir,
-      `chromedriver-${new Date().toISOString()}.log`,
-    );
-
     const service = new chrome.ServiceBuilder(chromedriverBuild.executablePath)
-      .loggingTo(chromedriverLogFile)
+      .loggingTo('chromedriver.log')
       .enableVerboseLogging();
 
     driver = await new Builder()
