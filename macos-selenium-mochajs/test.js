@@ -27,6 +27,7 @@ const {
   ChromeReleaseChannel,
 } = require('@puppeteer/browsers');
 const winston = require('winston');
+const { TimeoutError } = require('selenium-webdriver/lib/error');
 
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
@@ -122,7 +123,32 @@ describe('Selenium chromedriver', function () {
     expect(title).toBe('Google');
   });
 
-  it('ISSUE REPRODUCTION', async function () {
-    // Add test reproducing the issue here.
+  it('asserts the timeout error message has non-negative timeout value', async function () {
+    // Set a very short timeout to trigger the error
+    await driver.manage().setTimeouts({ pageLoad: 100 });
+
+    let capturedError;
+    try {
+      // Navigate to a page to trigger the timeout. This should throw a
+      // TimeoutError.
+      await driver.get('https://www.google.com');
+    } catch (err) {
+      capturedError = err;
+    }
+
+    // Assert that a timeout error was thrown
+    expect(capturedError).toBeDefined();
+    expect(capturedError).toBeInstanceOf(TimeoutError);
+
+    // Assert the error message format. The user wants to match:
+    // "Timed out receiving message from renderer: -0.000"
+    const messageRegex = /Timed out receiving message from renderer: (-?\d+\.\d{3})/;
+    const match = capturedError.message.match(messageRegex);
+    expect(match).not.toBeNull();
+
+    // Assert the timeout value is within a specific range.
+    const timeoutValue = parseFloat(match[1]);
+    // The user's example was "-0.000", so we'll check a small range around zero.
+    expect(timeoutValue).toBeGreaterThanOrEqual(0);
   });
 });
