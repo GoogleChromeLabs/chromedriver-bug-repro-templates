@@ -30,8 +30,8 @@ public class Tests
         options.AddArgument("--no-sandbox");
         // By default, the test uses the latest stable Chrome version.
         // Replace the "stable" with the specific browser version if needed,
-        // e.g. 'canary', '115' or '144.0.7553.0' for example.
-        options.BrowserVersion = "144.0.7553.0";
+        // e.g. 'canary', '115' or '144.0.7534.0' for example.
+        options.BrowserVersion = "144.0.7534.0";
 
         var service = ChromeDriverService.CreateDefaultService();
         service.LogPath = "d:\\chromedriver.log";
