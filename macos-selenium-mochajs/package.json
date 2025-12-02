@@ -4,7 +4,8 @@
   "description": "A template for reproducing ChromeDriver bugs on macOS with Selenium and MochaJS.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+    "format": "prettier --write test.js"
   },
   "keywords": [],
   "author": "Alex N. Jose (alexnj@google.com)",
@@ -12,9 +13,11 @@
   "dependencies": {
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
-    "selenium-webdriver": "^4.22.0"
+    "selenium-webdriver": "^4.22.0",
+    "winston": "^3.18.3"
   },
   "devDependencies": {
-    "@puppeteer/browsers": "^2.10.13"
+    "@puppeteer/browsers": "^2.10.13",
+    "prettier": "^3.7.3"
   }
 }

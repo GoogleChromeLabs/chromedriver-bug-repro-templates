@@ -19,31 +19,60 @@ const { expect } = require('chai');
 const chrome = require('selenium-webdriver/chrome');
 const fs = require('fs');
 const path = require('path');
-const { install, Browser } = require('@puppeteer/browsers');
+const {
+  install,
+  Browser,
+  resolveBuildId,
+  detectBrowserPlatform,
+  ChromeReleaseChannel,
+} = require('@puppeteer/browsers');
+const winston = require('winston');
 
-describe('DESCRIBE THE ISSUE', function() {
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: winston.format.cli(),
+  transports: [new winston.transports.Console()],
+});
+
+describe('Selenium chromedriver', function () {
   let driver;
 
-  before(async function() {
-    const buildId = fs.readFileSync('.browser', 'utf8').trim();
+  before(async function () {
+    // The chrome and chromedriver installation can take some time. Give 5
+    // minutes to install everything.
+    this.timeout(5 * 60 * 1000);
+    /**
+     * By default, the test uses the latest Chrome version. Replace with the
+     * specific Chromium version if needed, e.g. "144.0.7553.0".
+     */
+    const BROWSER_VERSION = await resolveBuildId(
+      Browser.CHROME,
+      detectBrowserPlatform(),
+      ChromeReleaseChannel.CANARY,
+    );
+
     const cacheDir = path.resolve(__dirname, '.cache');
 
-    console.log(`Installing Chrome and ChromeDriver version ${buildId}...`);
+    logger.info(
+      `Installing Chrome and ChromeDriver version ${BROWSER_VERSION}...`,
+    );
 
     const chromeBuild = await install({
       browser: Browser.CHROME,
-      buildId: buildId,
-      cacheDir: cacheDir
+      buildId: BROWSER_VERSION,
+      cacheDir: cacheDir,
     });
 
     const chromedriverBuild = await install({
       browser: Browser.CHROMEDRIVER,
-      buildId: buildId,
-      cacheDir: cacheDir
+      buildId: BROWSER_VERSION,
+      cacheDir: cacheDir,
     });
 
-    console.log(`Chrome installed at: ${chromeBuild.executablePath}`);
-    console.log(`ChromeDriver installed at: ${chromedriverBuild.executablePath}`);
+    logger.info(`Chrome installed at: ${chromeBuild.executablePath}`);
+    logger.info(
+      `ChromeDriver installed at: ${chromedriverBuild.executablePath}`,
+    );
 
     let options = new chrome.Options();
     options.addArguments('--headless');
@@ -51,28 +80,30 @@ describe('DESCRIBE THE ISSUE', function() {
     options.setBinaryPath(chromeBuild.executablePath);
 
     let service = new chrome.ServiceBuilder(chromedriverBuild.executablePath)
-        .loggingTo('chromedriver.log')
-        .enableVerboseLogging();
+      .loggingTo('chromedriver.log')
+      .enableVerboseLogging();
 
     driver = await new Builder()
-        .forBrowser('chrome')
-        .setChromeOptions(options)
-        .setChromeService(service)
-        .build();
+      .forBrowser('chrome')
+      .setChromeOptions(options)
+      .setChromeService(service)
+      .build();
   });
 
-  after(async function() {
+  after(async function () {
     await driver.quit();
   });
 
   /**
-  * This test is intended to verify the setup is correct.
-  */
-  it('should be able to navigate to google.com', async function() {
+   * This test is intended to verify the setup is correct.
+   */
+  it('should be able to navigate to google.com', async function () {
     await driver.get('https://www.google.com');
     const title = await driver.getTitle();
     expect(title).to.equal('Google');
   });
 
-  // Add test reproducing the issue here.
+  it('ISSUE REPRODUCTION', async function () {
+    // Add test reproducing the issue here.
+  });
 });
