@@ -14,37 +14,115 @@
  * limitations under the License.
  */
 
-const { Builder, By, until } = require('selenium-webdriver');
-const { expect } = require('chai');
+const { Builder } = require('selenium-webdriver');
+const { expect } = require('expect');
 const chrome = require('selenium-webdriver/chrome');
+const fs = require('fs');
+const path = require('path');
+const {
+  install,
+  Browser,
+  resolveBuildId,
+  detectBrowserPlatform,
+  ChromeReleaseChannel,
+} = require('@puppeteer/browsers');
+const winston = require('winston');
 
-describe('ChromeDriver Network Conditions Regression', function() {
-  this.timeout(30000);
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: winston.format.cli(),
+  transports: [new winston.transports.Console()],
+});
+
+describe('Selenium chromedriver', function () {
+  // The deafult timeout of 2s is not enough for selenium tests.
+  this.timeout(60 * 1000);
+
   let driver;
+  let chromedriverBuild;
+  let chromeBuild;
 
-  before(async function() {
-    let options = new chrome.Options();
-    options.addArguments('--headless');
-    options.addArguments('--no-sandbox');
+  before(async function () {
+    // The chrome and chromedriver installation can take some time. Give 5
+    // minutes to install everything.
+    this.timeout(5 * 60 * 1000);
+    /**
+     * By default, the test uses the latest Chrome version. Replace with the
+     * specific Chromium version if needed, e.g. "144.0.7553.0" or use
+     * environment variable like `BROWSER_VERSION=142.0.7444.175`
+     */
+    const BROWSER_VERSION =
+      process.env['BROWSER_VERSION'] ??
+      (await resolveBuildId(
+        Browser.CHROME,
+        detectBrowserPlatform(),
+        ChromeReleaseChannel.CANARY,
+      ));
 
-    let service = new chrome.ServiceBuilder()
-        .loggingTo('chromedriver.log')
-        .enableVerboseLogging();
+    const cacheDir = path.resolve(__dirname, '.cache');
 
-    driver = await new Builder()
-        .forBrowser('chrome')
-        .setChromeOptions(options)
-        .setChromeService(service)
-        .build();
+    logger.debug(`Chrome version: ${BROWSER_VERSION}`);
+
+    chromeBuild = await install({
+      browser: Browser.CHROME,
+      buildId: BROWSER_VERSION,
+      cacheDir: cacheDir,
+    });
+
+    chromedriverBuild = await install({
+      browser: Browser.CHROMEDRIVER,
+      buildId: BROWSER_VERSION,
+      cacheDir: cacheDir,
+    });
+
+    logger.debug(`Chrome installed at: ${chromeBuild.executablePath}`);
+    logger.debug(
+      `ChromeDriver installed at: ${chromedriverBuild.executablePath}`,
+    );
   });
 
-  after(async function() {
+  beforeEach(async function () {
+    logger.debug(`Launching Chrome at ${chromeBuild.executablePath}`);
+
+    const options = new chrome.Options();
+    options.addArguments('--headless');
+    options.addArguments('--no-sandbox');
+    options.setBinaryPath(chromeBuild.executablePath);
+
+    const chromedriverLogDir = path.join(__dirname, 'logs');
+    if (!fs.existsSync(chromedriverLogDir)) {
+      fs.mkdirSync(chromedriverLogDir);
+    }
+    const chromedriverLogFile = path.join(
+      chromedriverLogDir,
+      `chromedriver-${new Date().toISOString()}.log`,
+    );
+
+    const service = new chrome.ServiceBuilder(chromedriverBuild.executablePath)
+      .loggingTo(chromedriverLogFile)
+      .enableVerboseLogging();
+
+    driver = await new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(options)
+      .setChromeService(service)
+      .build();
+  });
+
+  afterEach(async function () {
     await driver.quit();
   });
 
-  it('should be able to navigate to google.com', async function() {
+  /**
+   * This test is intended to verify the setup is correct.
+   */
+  it('should be able to navigate to google.com', async function () {
     await driver.get('https://www.google.com');
     const title = await driver.getTitle();
-    expect(title).to.equal('Google');
+    expect(title).toBe('Google');
+  });
+
+  it('ISSUE REPRODUCTION', async function () {
+    // Add test reproducing the issue here.
   });
 });
