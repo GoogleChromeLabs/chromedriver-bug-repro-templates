@@ -97,3 +97,18 @@ it('ISSUE REPRODUCTION', async function () {
 The included GitHub Actions workflow in
 `.github/workflows/macos-selenium-mochajs.yml` will automatically run the tests on
 every push and pull request.
+
+## Automating Triage with Gemini CLI
+
+The Gemini CLI can be used to automate the bug triaging process using the template defined in GEMINI.md.
+
+### Prerequisits
+
+Consult internal documentation for exact MCP servers required to access Buganizer.
+
+### Execution
+
+Run gemini cli and prompt
+```
+Triage chromedriver bug <BUG_ID>
+```
