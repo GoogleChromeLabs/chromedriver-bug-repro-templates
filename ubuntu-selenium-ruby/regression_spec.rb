@@ -23,7 +23,7 @@ RSpec.describe 'ChromeDriver Network Conditions Regression' do
     # By default, the test uses the latest stable Chrome version.
     # Replace the "stable" with the specific browser version if needed,
     # e.g. 'canary', '115' or '144.0.7553.0' for example.
-    options.browser_version = 'stable'
+    options.browser_version = '144.0.7553.0'
     service = Selenium::WebDriver::Service.chrome(args: ['--verbose', '--log-path=chromedriver.log'])
     driver = Selenium::WebDriver.for :chrome, options: options, service: service
 
