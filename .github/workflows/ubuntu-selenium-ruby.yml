@@ -17,16 +17,16 @@ name: Ubuntu Selenium Ruby
 on:
   push:
     paths:
-      - 'ubuntu-selenium-ruby/**'
+      - 'selenium-ruby/**'
       - '.github/workflows/ubuntu-selenium-ruby.yml'
   pull_request:
     paths:
-      - 'ubuntu-selenium-ruby/**'
+      - 'selenium-ruby/**'
       - '.github/workflows/ubuntu-selenium-ruby.yml'
 
 defaults:
   run:
-    working-directory: ubuntu-selenium-ruby
+    working-directory: selenium-ruby
 
 jobs:
   test:

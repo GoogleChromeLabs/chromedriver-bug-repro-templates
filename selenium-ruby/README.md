@@ -1,6 +1,10 @@
-# Template for Ubuntu, Selenium, Ruby
+# Template for Selenium and Ruby
 
 This repository provides a template for reproducing any ChromeDriver bug.
+
+The included GitHub Actions will automatically run the tests on every push and
+pull request, on the following platforms:
+ * [Ubuntu](.github/workflows/ubuntu-selenium-ruby.yml)
 
 ## Steps to Reproduce
 
@@ -22,7 +26,3 @@ This sequence of actions fails with ChromeDriver 126, but works with 125.
     ```bash
     bundle exec rspec
     ```
-
-## GitHub Actions
-
-The included GitHub Actions workflow in `.github/workflows/ci.yml` will automatically run the tests on every push and pull request.

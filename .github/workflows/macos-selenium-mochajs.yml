@@ -17,16 +17,16 @@ name: MacOS Selenium Mocha.js
 on:
   push:
     paths:
-      - 'macos-selenium-mochajs/**'
+      - 'selenium-mochajs/**'
       - '.github/workflows/macos-selenium-mochajs.yml'
   pull_request:
     paths:
-      - 'macos-selenium-mochajs/**'
+      - 'selenium-mochajs/**'
       - '.github/workflows/macos-selenium-mochajs.yml'
 
 defaults:
   run:
-    working-directory: macos-selenium-mochajs
+    working-directory: selenium-mochajs
 
 jobs:
   test:
@@ -41,11 +41,11 @@ jobs:
         node-version: 'latest'
 
     - name: Install dependencies
-      working-directory: macos-selenium-mochajs
+      working-directory: selenium-mochajs
       run: npm install
 
     - name: Run tests
-      working-directory: macos-selenium-mochajs
+      working-directory: selenium-mochajs
       run: npm test
 
     - name: Dump log

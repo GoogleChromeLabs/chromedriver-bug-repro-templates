@@ -1,6 +1,10 @@
-# Template for Ubuntu, Selenium, Java
+# Template for Selenium and Java
 
 This repository provides a template for reproducing any ChromeDriver bug.
+
+The included GitHub Actions will automatically run the tests on every push and
+pull request, on the following platforms:
+ * [Ubuntu](.github/workflows/ubuntu-selenium-java.yml)
 
 ## Your Goal
 
@@ -22,12 +26,12 @@ The test `src/test/java/RegressionTest.java` performs the following actions:
 ## For local testing
 
 - Have the appropriate version of Maven installed.
-1.  Install dependencies and run the tests:
+- Install dependencies and run the tests:
     ```bash
     mvn test
     ```
 
-## Running the Tests
+### Running the Tests
 
 1.  Install dependencies and run the tests:
     ```bash
@@ -48,12 +52,6 @@ public void ISSUE_REPRODUCTION() {
   // ... assertions and interactions
 }
 ```
-
-## GitHub Actions
-
-The included GitHub Actions workflow in
-`.github/workflows/ubuntu-selenium-java.yml` will automatically run the tests on
-every push and pull request.
 
 ## Automating Triage with Gemini CLI
 

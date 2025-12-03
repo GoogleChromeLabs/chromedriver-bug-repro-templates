@@ -17,16 +17,16 @@ name: Windows Selenium C#.NET
 on:
   push:
     paths:
-      - 'windows-selenium-csharp/**'
+      - 'selenium-csharp/**'
       - '.github/workflows/windows-selenium-csharp.yml'
   pull_request:
     paths:
-      - 'windows-selenium-csharp/**'
+      - 'selenium-csharp/**'
       - '.github/workflows/windows-selenium-csharp.yml'
 
 defaults:
   run:
-    working-directory: windows-selenium-csharp
+    working-directory: selenium-csharp
 
 
 jobs:

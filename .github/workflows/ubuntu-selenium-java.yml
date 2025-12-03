@@ -17,16 +17,16 @@ name: Ubuntu Selenium Java
 on:
   push:
     paths:
-      - 'ubuntu-selenium-java/**'
+      - 'selenium-java/**'
       - '.github/workflows/ubuntu-selenium-java.yml'
   pull_request:
     paths:
-      - 'ubuntu-selenium-java/**'
+      - 'selenium-java/**'
       - '.github/workflows/ubuntu-selenium-java.yml'
 
 defaults:
   run:
-    working-directory: ubuntu-selenium-java
+    working-directory: selenium-java
 
 jobs:
   test:

@@ -1,7 +1,11 @@
-# Template for macOS, Selenium, MochaJS
+# Template for Selenium and MochaJS
 
 This repository serves as a boilerplate for reproducing ChromeDriver regressions
-across platforms using Selenium WebDriver and MochaJS on macOS.
+across platforms using Selenium WebDriver and MochaJS.
+
+The included GitHub Actions will automatically run the tests on every push and
+pull request, on the following platforms:
+ * [macOS](.github/workflows/macos-selenium-mochajs.yml)
 
 ## Your Goal
 
@@ -46,12 +50,6 @@ it('ISSUE REPRODUCTION', async function () {
   // ... assertions and interactions
 });
 ```
-
-## GitHub Actions
-
-The included GitHub Actions workflow in
-`.github/workflows/macos-selenium-mochajs.yml` will automatically run the tests on
-every push and pull request.
 
 ## Automating Triage with Gemini CLI
 

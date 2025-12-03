@@ -1,6 +1,10 @@
-# Template for Windows, Selenium, C#
+# Template for Selenium and C#
 
 This repository provides a template for reproducing any ChromeDriver bug.
+
+The included GitHub Actions will automatically run the tests on every push and
+pull request, on the following platforms:
+ * [Windows](.github/workflows/windows-selenium-csharp.yml)
 
 ## Steps to Reproduce
 
@@ -18,7 +22,3 @@ This sequence of actions fails with ChromeDriver 126, but works with 125.
     ```bash
     dotnet test
     ```
-
-## GitHub Actions
-
-The included GitHub Actions workflow in `.github/workflows/windows-selenium-csharp.yml` will automatically run the tests on every push and pull request.
