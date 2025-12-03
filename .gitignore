@@ -3,5 +3,4 @@ node_modules/
 .idea/
 chromedriver.log
 *.iml
-/ubuntu-selenium-java/target/
 .DS_Store
