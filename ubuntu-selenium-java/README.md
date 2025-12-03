@@ -37,7 +37,8 @@ The test `src/test/java/RegressionTest.java` performs the following actions:
 ## Customizing the Test
 
 Open `src/test/java/RegressionTest.java` and modify the provided test block to
-include the steps required to reproduce your specific issue.
+include the steps required to reproduce your specific issue. Rename the test
+accordingly.
 
 ```java
 @Test
