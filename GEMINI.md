@@ -8,10 +8,11 @@ Your task is to triage a ChromeDriver bug report using this pre-configured bug r
 
 1.  **Analyze the Bug Report:**
     *   Thoroughly read the bug description, summary, and all comments on `crbug.com/<BUG_ID>` to understand the issue.
-    *   Identify the operating system, programming language, and any other technologies required to reproduce the bug.
+    *   Identify the operating system (identified usually by `OS:`), programming language, and any other technologies required to reproduce the bug.
+    *   Print operating system, programming language and technologies identified to the user.
 
 2.  **Select and Configure the Environment:**
-    *   Choose the most relevant template from this repository that matches the bug's environment (e.g., `macos-selenium-mochajs`, `ubuntu-selenium-java`, etc.).
+    *   Each template folder (`selenium-mochajs`, `selenium-java` has one or more operating systems enabled via their GitHub actions file `.github/workflows/`. Go through each action file and identify which operating systems are supported for each template to ensure a correct operating system selection. Choose the most relevant template from this repository that matches the bug's technology (e.g., `selenium-mochajs`, `selenium-java`, etc.) based on it.
     *   Navigate into the chosen template directory.
     *   If necessary, modify the corresponding GitHub Actions workflow file in `.github/workflows/` to set up the precise environment. This may include:
         *   Installing specific browser versions.
