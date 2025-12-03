@@ -56,7 +56,7 @@ public class RegressionTest {
   }
 
   @Test
-  public void shouldBeAbleToNavigateAfterDeletingNetworkConditions() {
+  public void verifySetup_shouldBeAbleToNavigateToGoogleCom() {
     // Navigate to a URL
     driver.get("https://www.google.com");
     // Assert that the navigation was successful
