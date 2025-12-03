@@ -2,15 +2,30 @@
 
 This repository provides a template for reproducing any ChromeDriver bug.
 
-## Steps to Reproduce
+## Your Goal
 
-The test in `src/test/java/RegressionTest.java` follows these steps:
+To use this template, extend the test case `ISSUE_REPRODUCTION` in
+`src/test/java/RegressionTest.java` with steps that demonstrate the issue you are
+investigating. Your aim should be to create a reproducible, minimal test case. Update
+the test name accordingly. 
 
-1.  Initializes a new Chrome browser session.
-2.  Navigates to a URL.
-3.  Asserts that the page title is correct.
+## Overview
 
-This sequence of actions fails with ChromeDriver 126, but works with 125.
+The test `src/test/java/RegressionTest.java` performs the following actions:
+
+1.  **Environment Setup**: Automatically downloads a specific version of Chrome
+    (Stable by default) and the matching ChromeDriver binary.
+2.  **Test Execution**:
+    - The sample test navigates to `https://www.google.com`. You can modify this
+      test to add your specific reproduction steps.
+
+## For local testing
+
+- Have the appropriate version of Maven installed.
+1.  Install dependencies and run the tests:
+    ```bash
+    mvn test
+    ```
 
 ## Running the Tests
 
@@ -19,6 +34,39 @@ This sequence of actions fails with ChromeDriver 126, but works with 125.
     mvn test
     ```
 
+## Customizing the Test
+
+Open `src/test/java/RegressionTest.java` and modify the provided test block to
+include the steps required to reproduce your specific issue.
+
+```java
+@Test
+public void ISSUE_REPRODUCTION() {
+  // Add test reproducing the issue here.
+  driver.get("https://example.com");
+  // ... assertions and interactions
+}
+```
+
 ## GitHub Actions
 
-The included GitHub Actions workflow in `.github/workflows/ubuntu-selenium-java.yml` will automatically run the tests on every push and pull request.
+The included GitHub Actions workflow in
+`.github/workflows/ubuntu-selenium-java.yml` will automatically run the tests on
+every push and pull request.
+
+## Automating Triage with Gemini CLI
+
+The Gemini CLI can be used to automate the bug triaging process using the template
+defined in GEMINI.md.
+
+### Prerequisits
+
+For Google internal users, consult internal documentation for exact MCP servers
+required to access issue reports.
+
+### Execution
+
+Run gemini cli and prompt
+```
+Triage chromedriver bug <BUG_ID>
+```

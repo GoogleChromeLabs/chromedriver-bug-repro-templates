@@ -14,46 +14,57 @@
  * limitations under the License.
  */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.http.ClientConfig;
-import java.net.URL;
-import java.time.Duration;
-import java.util.HashMap;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class RegressionTest {
 
-    @Test
-    public void shouldBeAbleToNavigateAfterDeletingNetworkConditions() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("--no-sandbox");
+  private WebDriver driver;
 
-        // By default, the test uses the latest stable Chrome version.
-        // Replace the "stable" with the specific browser version if needed,
-        // e.g. 'canary', '115' or '144.0.7534.0' for example.
-        options.setBrowserVersion("stable");
+  @BeforeEach
+  public void setUp() {
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless");
+    options.addArguments("--no-sandbox");
 
-        ChromeDriverService service = new ChromeDriverService.Builder()
-                .withLogFile(new java.io.File("chromedriver.log"))
-                .withVerbose(true)
-                .build();
+    // By default, the test uses the latest stable Chrome version.
+    // Replace the "stable" with the specific browser version if needed,
+    // e.g. 'canary', '115' or '144.0.7534.0' for example.
+    options.setBrowserVersion("stable");
 
-        WebDriver driver = new ChromeDriver(service, options);
+    ChromeDriverService service =
+        new ChromeDriverService.Builder()
+            .withLogFile(new java.io.File("chromedriver.log"))
+            .withVerbose(true)
+            .build();
 
-        try {
-            // Navigate to a URL
-            driver.get("https://www.google.com");
+    driver = new ChromeDriver(service, options);
+  }
 
-            // Assert that the navigation was successful
-            assertEquals("Google", driver.getTitle());
-        } finally {
-            driver.quit();
-        }
+  @AfterEach
+  public void tearDown() {
+    if (driver != null) {
+      driver.quit();
     }
+  }
+
+  @Test
+  public void shouldBeAbleToNavigateAfterDeletingNetworkConditions() {
+    // Navigate to a URL
+    driver.get("https://www.google.com");
+    // Assert that the navigation was successful
+    assertEquals("Google", driver.getTitle());
+  }
+
+  @Test
+  public void ISSUE_REPRODUCTION() {
+    // Add test reproducing the issue here.
+  }
 }
