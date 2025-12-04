@@ -29,7 +29,7 @@ The test `test.py` performs the following actions:
 - Install dependencies and run the test:
     ```bash
     pip install -r requirements.txt
-    python test.py
+    pytest
     ```
 
 ### Running the Test
@@ -37,53 +37,42 @@ The test `test.py` performs the following actions:
 1.  Install dependencies and run the test:
     ```bash
     pip install -r requirements.txt
-    python test.py
+    pytest
     ```
 
 ## Customizing the Test
 
-Open `test.py` and modify the `run_test` function to
+Open `test.py` and modify the `test_issue_reproduction` function to
 include the steps required to reproduce your specific issue.
 
 ```python
-def run_test(driver):
+def test_issue_reproduction(driver):
     # Add test reproducing the issue here.
     driver.get("https://example.com")
     # ... assertions and interactions
 ```
 
-### Specifying Chrome Version
-
-To test with a specific Chrome version (e.g., 'canary', '115', or '144.0.7534.0'), you can modify the `if __name__ == "__main__":` block in `test.py` to pass the desired version to the `main` function:
-
-```python
-if __name__ == "__main__":
-    # Example to run with Chrome Canary
-    main(browser_version='canary')
-    # Example to run with Chrome version 115
-    # main(browser_version='115')
-    # For latest stable, call without argument:
-    # main()
-```
-
 ### Advanced Configuration
 
-The `main` function in `test.py` accepts several arguments to customize the test execution:
+To customize the test execution (e.g., run with a visible browser UI, change the Chrome version), you can modify the `driver` fixture in `test.py`.
 
-- `browser_version`: Specify a Chrome version (e.g., `'canary'`, `'115'`).
-- `headless`: Set to `False` to run the test with a visible browser UI. Defaults to `True`.
-- `verbose`: Set to `False` to disable verbose logging from ChromeDriver. Defaults to `True`.
-- `log_path`: Specify the path for the ChromeDriver log file. Defaults to `'chromedriver.log'`.
-
-Example of a customized `main` call in the `if __name__ == "__main__":` block:
+Example of a customized `driver` fixture:
 ```python
-if __name__ == "__main__":
-    main(
-        browser_version='stable',
-        headless=False,
-        verbose=True,
-        log_path='chromedriver.log'
+@pytest.fixture
+def driver():
+    options = webdriver.ChromeOptions()
+    # options.add_argument('--headless') # Run with UI
+    options.add_argument('--no-sandbox')
+
+    service = ChromeService(
+        ChromeDriverManager(version='115').install(), # Pin Chrome version
+        log_path='chromedriver.log',
+        # service_args=['--verbose'] # Disable verbose logging
     )
+
+    driver = webdriver.Chrome(service=service, options=options)
+    yield driver
+    driver.quit()
 ```
 
 ## Automating Triage with Gemini CLI

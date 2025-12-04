@@ -1,8 +1,27 @@
+import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-def run_test(driver):
+
+@pytest.fixture
+def driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+
+    service = ChromeService(
+        ChromeDriverManager().install(),
+        log_path='chromedriver.log',
+        service_args=['--verbose']
+    )
+
+    driver = webdriver.Chrome(service=service, options=options)
+    yield driver
+    driver.quit()
+
+
+def test_issue_reproduction(driver):
     """
     This test is a template for reproducing a ChromeDriver bug.
     
@@ -13,33 +32,3 @@ def run_test(driver):
     """
     driver.get("https://www.google.com")
     assert "Google" in driver.title
-
-def main(browser_version=None, headless=True, verbose=True, log_path='chromedriver.log'):
-    options = webdriver.ChromeOptions()
-    if headless:
-        options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-
-    if browser_version:
-        driver_manager = ChromeDriverManager(version=browser_version)
-    else:
-        driver_manager = ChromeDriverManager()
-    
-    service_args = []
-    if verbose:
-        service_args.append('--verbose')
-
-    service = ChromeService(
-        driver_manager.install(),
-        log_path=log_path,
-        service_args=service_args
-    )
-
-    driver = webdriver.Chrome(service=service, options=options)
-    try:
-        run_test(driver)
-    finally:
-        driver.quit()
-
-if __name__ == "__main__":
-    main()
