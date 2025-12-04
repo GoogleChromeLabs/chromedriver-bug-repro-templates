@@ -35,7 +35,7 @@ The test script (`test.py`) performs the following actions:
   ```
 - To run the tests with the default configuration (latest Chrome Stable):
   ```bash
-  pytest
+  pytest test.py
   ```
 
 ## Customizing the Test
