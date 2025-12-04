@@ -1,6 +1,7 @@
 # Template for Selenium and Python
 
-This repository provides a template for reproducing any ChromeDriver bug.
+This repository serves as a boilerplate for reproducing ChromeDriver regressions
+across platforms using Selenium WebDriver and Pytest.
 
 The included GitHub Actions will automatically run the tests on every push and
 pull request, on the following platforms:
@@ -8,71 +9,45 @@ pull request, on the following platforms:
 
 ## Your Goal
 
-To use this template, extend the test case `test_issue_reproduction` in
-`test.py` with steps that demonstrate the issue you are
-investigating. Your aim should be to create a reproducible, minimal test case. Update
-the test name accordingly. 
+To use this template, extend the test case in `test.py` with steps that
+demonstrate the issue you are investigating. Your aim should be to create
+a reproducible, minimal test case.
 
 ## Overview
 
-The test `test.py` performs the following actions:
+The test script (`test.py`) performs the following actions:
 
 1.  **Environment Setup**: Automatically downloads a specific version of Chrome
-    (Stable by default) and the matching ChromeDriver binary.
-2.  **Test Execution**:
+    (Stable by default) and the matching ChromeDriver binary into a local `.cache`
+    directory using `selenium-manager`.
+2.  **WebDriver Initialization**: Configures Selenium to use the downloaded binaries
+    explicitly, ensuring version compatibility.
+3.  **Test Execution**:
     - The sample test navigates to `https://www.google.com`. You can modify this
       test to add your specific reproduction steps.
 
 ## For local testing
 
-- Have Python and pip installed.
-- Install dependencies and run the test:
-    ```bash
-    python3 -m pip install -r requirements.txt
-    python3 -m pytest
-    ```
-
-### Running the Test
-
-1.  Install dependencies and run the test:
-    ```bash
-    python3 -m pip install -r requirements.txt
-    python3 -m pytest
-    ```
+- Have the appropriate version of Python installed.
+- Install the necessary dependencies:
+  ```bash
+  pip install -r requirements.txt
+  ```
+- To run the tests with the default configuration (latest Chrome Stable):
+  ```bash
+  pytest
+  ```
 
 ## Customizing the Test
 
-Open `test.py` and modify the `test_issue_reproduction` function to
-include the steps required to reproduce your specific issue.
+Open `test.py` and modify the provided test block to include the steps required to
+reproduce your specific issue.
 
 ```python
 def test_issue_reproduction(driver):
     # Add test reproducing the issue here.
-    driver.get("https://example.com")
+    driver.get('https://example.com')
     # ... assertions and interactions
-```
-
-### Advanced Configuration
-
-To customize the test execution (e.g., run with a visible browser UI, change the Chrome version), you can modify the `driver` fixture in `test.py`.
-
-Example of a customized `driver` fixture:
-```python
-@pytest.fixture
-def driver():
-    options = webdriver.ChromeOptions()
-    # options.add_argument('--headless') # Run with UI
-    options.add_argument('--no-sandbox')
-
-    service = ChromeService(
-        ChromeDriverManager(version='115').install(), # Pin Chrome version
-        log_path='chromedriver.log',
-        # service_args=['--verbose'] # Disable verbose logging
-    )
-
-    driver = webdriver.Chrome(service=service, options=options)
-    yield driver
-    driver.quit()
 ```
 
 ## Automating Triage with Gemini CLI
