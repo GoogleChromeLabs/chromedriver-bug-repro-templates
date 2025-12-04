@@ -28,16 +28,16 @@ The test `test.py` performs the following actions:
 - Have Python and pip installed.
 - Install dependencies and run the test:
     ```bash
-    pip install -r requirements.txt
-    pytest
+    python3 -m pip install -r requirements.txt
+    python3 -m pytest
     ```
 
 ### Running the Test
 
 1.  Install dependencies and run the test:
     ```bash
-    pip install -r requirements.txt
-    pytest
+    python3 -m pip install -r requirements.txt
+    python3 -m pytest
     ```
 
 ## Customizing the Test
