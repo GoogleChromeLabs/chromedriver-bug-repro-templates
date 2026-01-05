@@ -47,7 +47,7 @@ jobs:
     - name: Run tests on Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        arch: x86_64
+        arch: arm64-v8a
         api-level: 33
         target: google_apis
         script: mvn -B test --file android-selenium-java/pom.xml
