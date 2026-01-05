@@ -25,5 +25,6 @@ jobs:
     - name: Run tests on Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 29
+        api-level: 34
+        enable-emulator-cache: true
         script: mvn -B test --file android-selenium-java/pom.xml
