@@ -27,6 +27,7 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
+        cache-dependency-path: android-selenium-java/package-lock.json
     - name: Install Appium and UIAutomator2 Driver
       run: |
         npm install -g appium@next
