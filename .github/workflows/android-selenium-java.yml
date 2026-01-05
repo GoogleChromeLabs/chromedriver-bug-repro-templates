@@ -22,6 +22,26 @@ jobs:
         java-version: '25'
         distribution: 'temurin'
         cache: maven
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install Appium and UIAutomator2 Driver
+      run: |
+        npm install -g appium
+        appium driver install uiautomator2
+    - name: Start Appium Server
+      run: |
+        appium &
+        timeout=120
+        while ! curl -s "http://127.0.0.1:4723/status" > /dev/null && [ $timeout -gt 0 ]; do
+          sleep 1
+          timeout=$((timeout-1))
+        done
+        if [ $timeout -eq 0 ]; then
+          echo "Appium server failed to start"
+          exit 1
+        fi
     - name: Run tests on Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
