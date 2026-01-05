@@ -46,5 +46,5 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 34
-        enable-emulator-cache: true
+        target: google_apis
         script: mvn -B test --file android-selenium-java/pom.xml
