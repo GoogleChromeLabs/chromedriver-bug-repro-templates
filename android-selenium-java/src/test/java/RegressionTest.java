@@ -36,7 +36,7 @@ public class RegressionTest {
         .setDeviceName("Android Emulator")
         .setAutomationName("UiAutomator2")
         .withBrowserName("Chrome")
-        .setUiautomator2ServerInstallTimeout(60000);
+        .setUiautomator2ServerInstallTimeout(java.time.Duration.ofMillis(60000));
 
     // Initialize AndroidDriver, connecting to the Appium server (usually http://127.0.0.1:4723)
     driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
