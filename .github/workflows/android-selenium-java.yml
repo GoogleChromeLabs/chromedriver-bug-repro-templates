@@ -42,11 +42,13 @@ jobs:
 
     - name: Install Appium and UIAutomator2 Driver
       run: |
-        npm install -g appium@next
+        npm install -g appium
         appium driver install uiautomator2
     - name: Start Appium Server
       run: |
-        appium &
+        export ANDROID_HOME=$HOME/Library/Android/sdk
+        export ANDROID_SDK_ROOT=$ANDROID_HOME
+        appium --allow-insecure uiautomator2:chromedriver_autodownload &
         timeout=120
         while ! curl -s "http://127.0.0.1:4723/status" > /dev/null && [ $timeout -gt 0 ]; do
           sleep 1
@@ -64,5 +66,5 @@ jobs:
         arch: arm64-v8a
         cores: 4
         emulator-boot-timeout: 1200
-        emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot
+        emulator-options: -no-window -gpu host -no-snapshot
         script: mvn -B test --file android-selenium-java/pom.xml
