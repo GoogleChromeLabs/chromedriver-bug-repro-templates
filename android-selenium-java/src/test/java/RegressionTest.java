@@ -41,6 +41,8 @@ public class RegressionTest {
 
     // Initialize AndroidDriver, connecting to the Appium server (usually http://127.0.0.1:4723)
     driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
+    driver.manage().timeouts().pageLoadTimeout(java.time.Duration.ofSeconds(60));
+    driver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(30));
   }
 
   @AfterEach
