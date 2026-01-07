@@ -1,6 +1,6 @@
-# Template for Selenium and Java
+# Template for Selenium and Java on Android
 
-This repository provides a template for reproducing any ChromeDriver bug.
+This repository provides a template for reproducing ChromeDriver bugs on Android.
 
 The included GitHub Actions will automatically run the tests on every push and
 pull request, on the following platforms:
