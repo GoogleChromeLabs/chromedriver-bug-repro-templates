@@ -52,14 +52,7 @@ jobs:
         force-avd-creation: true
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: true
-        script: |
-          appium --allow-insecure uiautomator2:chromedriver_autodownload > appium.log 2>&1 &
-          timeout=60
-          while ! curl -s "http://127.0.0.1:4723/status" > /dev/null && [ $timeout -gt 0 ]; do
-            sleep 1
-            timeout=$((timeout-1))
-          done
-          mvn -B test --file android-selenium-java/pom.xml
+        script: appium --allow-insecure uiautomator2:chromedriver_autodownload > appium.log 2>&1 & i=0; while [ $i -lt 60 ]; do if curl -s http://127.0.0.1:4723/status > /dev/null; then break; fi; sleep 1; i=$((i+1)); done; mvn -B test --file android-selenium-java/pom.xml
 
     - name: Upload logs
       if: always()
