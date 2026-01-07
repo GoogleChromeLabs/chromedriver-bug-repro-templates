@@ -22,17 +22,36 @@ The test `src/test/java/RegressionTest.java` performs the following actions:
     - The sample test navigates to `https://www.google.com`. You can modify this
       test to add your specific reproduction steps.
 
-## For local testing
+## Local Testing
 
-- Have the appropriate version of Maven installed.
-- Install dependencies and run the tests:
+### Prerequisites
+
+To run these tests locally, you need the following installed and configured:
+
+1.  **Java Development Kit (JDK)**: Version 21 or higher.
+2.  **Maven**: For building and running the project.
+3.  **Node.js & NPM**: Required to run Appium.
+4.  **Appium**: Install globally via:
     ```bash
-    mvn test
+    npm install -g appium
     ```
+5.  **UiAutomator2 Driver**: Install via:
+    ```bash
+    appium driver install uiautomator2
+    ```
+6.  **Android SDK**: Ensure `ANDROID_HOME` is set and `platform-tools` are in your `PATH`.
+7.  **Android Emulator or Physical Device**:
+    *   The device must have **Chrome** installed.
+    *   Verify connectivity with `adb devices`.
 
 ### Running the Tests
 
-1.  Install dependencies and run the tests:
+1.  **Start your Android device/emulator**.
+2.  **Start the Appium server** in a separate terminal:
+    ```bash
+    appium --allow-insecure uiautomator2:chromedriver_autodownload
+    ```
+3.  **Run the Maven tests**:
     ```bash
     mvn test
     ```
