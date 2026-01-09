@@ -1,10 +1,10 @@
 # Template for Appium and Java on Android
 
-This repository provides a template for reproducing ChromeDriver bugs on Android.
+This repository provides a template for reproducing ChromeDriver bugs on Android using Appium.
 
 The included GitHub Actions will automatically run the tests on every push and
 pull request, on the following platforms:
- * [Android Emulator](.github/workflows/appium-android-java.yml)
+ * [Appium Android Emulator](.github/workflows/appium-android-java.yml)
 
 ## Your Goal
 
