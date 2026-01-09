@@ -14,7 +14,7 @@ Your task is to triage a ChromeDriver bug report using this pre-configured bug r
     
 2.  **Select and Configure the Environment:**
     *   Before continuing with further steps, state your understanding of bug description, operating system, programming language and technologies identified to the user, and have them confirm before continuing.
-    *   Each template folder (`selenium-mochajs`, `selenium-java`, `android-selenium-java`) has one or more operating systems enabled via their GitHub actions file `.github/workflows/`. Go through each action file and identify which operating systems are supported for each template to ensure a correct operating system selection. Choose the most relevant template from this repository that matches the bug's technology (e.g., `selenium-mochajs`, `selenium-java`, `android-selenium-java`, etc.). **If the issue is specifically for Android, use the `android-selenium-java` template.**
+    *   Each template folder (`selenium-mochajs`, `selenium-java`, `appium-android-java`) has one or more operating systems enabled via their GitHub actions file `.github/workflows/`. Go through each action file and identify which operating systems are supported for each template to ensure a correct operating system selection. Choose the most relevant template from this repository that matches the bug's technology (e.g., `selenium-mochajs`, `selenium-java`, `appium-android-java`, etc.). **If the issue is specifically for Android, use the `appium-android-java` template.**
     *   Navigate into the chosen template directory.
     *   If necessary, modify the corresponding GitHub Actions workflow file in `.github/workflows/` to set up the precise environment. This may include:
         *   Installing specific browser versions.

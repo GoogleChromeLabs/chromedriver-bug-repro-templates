@@ -1,14 +1,14 @@
-name: Android Selenium Java
+name: Appium Android Java
 
 on:
   push:
     paths:
-      - 'android-selenium-java/**'
-      - '.github/workflows/android-selenium-java.yml'
+      - 'appium-android-java/**'
+      - '.github/workflows/appium-android-java.yml'
   pull_request:
     paths:
-      - 'android-selenium-java/**'
-      - '.github/workflows/android-selenium-java.yml'
+      - 'appium-android-java/**'
+      - '.github/workflows/appium-android-java.yml'
 
 jobs:
   test:
@@ -30,7 +30,7 @@ jobs:
       with:
         node-version: '22'
         cache: 'npm'
-        cache-dependency-path: android-selenium-java/package-lock.json
+        cache-dependency-path: appium-android-java/package-lock.json
 
     - name: Enable KVM group permissions
       run: |
@@ -52,7 +52,7 @@ jobs:
         force-avd-creation: true
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: true
-        script: appium --allow-insecure uiautomator2:chromedriver_autodownload > appium.log 2>&1 & i=0; while [ $i -lt 60 ]; do if curl -s http://127.0.0.1:4723/status > /dev/null; then break; fi; sleep 1; i=$((i+1)); done; mvn -B test --file android-selenium-java/pom.xml
+        script: appium --allow-insecure uiautomator2:chromedriver_autodownload > appium.log 2>&1 & i=0; while [ $i -lt 60 ]; do if curl -s http://127.0.0.1:4723/status > /dev/null; then break; fi; sleep 1; i=$((i+1)); done; mvn -B test --file appium-android-java/pom.xml
 
     - name: Upload logs
       if: always()
@@ -61,4 +61,4 @@ jobs:
         name: logs
         path: |
           appium.log
-          android-selenium-java/target/surefire-reports/
+          appium-android-java/target/surefire-reports/

@@ -1,7 +1,7 @@
 {
-  "name": "android-selenium-java",
+  "name": "appium-android-java",
   "version": "1.0.0",
-  "description": "Selenium Java tests on Android",
+  "description": "Appium Java tests on Android",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
