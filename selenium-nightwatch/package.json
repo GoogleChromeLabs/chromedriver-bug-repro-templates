@@ -1,0 +1,21 @@
+{
+  "name": "selenium-nightwatch",
+  "version": "1.0.0",
+  "description": "A template for reproducing ChromeDriver bugs with Selenium and Nightwatch.",
+  "main": "test.js",
+  "scripts": {
+    "test": "nightwatch test.js",
+    "format": "prettier --write test.js nightwatch.conf.js"
+  },
+  "keywords": [],
+  "author": "Alex N. Jose (alexnj@google.com)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chromedriver": "^143.0.4",
+    "nightwatch": "^3.14.0",
+    "selenium-webdriver": "^4.38.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.3"
+  }
+}
